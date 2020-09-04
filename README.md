@@ -1,1 +1,1 @@
-# testing-automated-releases
+# testing-automated-releases-template
