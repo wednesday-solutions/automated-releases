@@ -1,14 +1,67 @@
-name: Release Drafter
-
 on:
   push:
     branches:
       - master
+      - develop
+      - qa
+
+name: Create Release
 
 jobs:
-  update_release_draft:
+  build:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
-      - uses: release-drafter/release-drafter@master
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Create alpha Release
+        if: github.ref == 'refs/heads/develop'
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
+          release_name: Release ${{ steps.package-version.outputs.current-version}}-alpha
+          target_commitish: 'develop'
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+      - name: Create beta Release
+        if: github.ref == 'refs/heads/qa'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version}}-beta
+          release_name: Release ${{ steps.package-version.outputs.current-version}}-beta
+          target_commitish: 'qa'
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
+      - name: Create prod Release
+        if: github.ref == 'refs/heads/master'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version}}
+          release_name: Release ${{ steps.package-version.outputs.current-version}}
+          target_commitish: 'master'
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
