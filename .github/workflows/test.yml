@@ -1,26 +1,14 @@
-name: Bump version
+name: Release Drafter
+
 on:
   push:
     branches:
       - master
+
 jobs:
-  build:
-    name: Build & Test
+  update_release_draft:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: npm install
+      - uses: release-drafter/release-drafter@master
         env:
-          CI: true
-      - name: Version Bump
-        run: npx semantic-release
-        env:
-          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
