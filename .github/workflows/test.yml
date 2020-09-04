@@ -19,7 +19,7 @@ jobs:
         uses: martinbeentjes/npm-get-version-action@master
       - name: Create alpha Release
         if: github.ref == 'refs/heads/develop'
-        id: create_release
+        id: create_alpha_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -35,7 +35,7 @@ jobs:
           prerelease: false
       - name: Create beta Release
         if: github.ref == 'refs/heads/qa'
-        id: create_release
+        id: create_beta_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
