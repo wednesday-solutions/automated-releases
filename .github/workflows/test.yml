@@ -37,9 +37,7 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
-          body: |
-            "${COMMIT_MESSAGE}"
-            printenv
+          body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
       - name: Create beta Release
@@ -51,9 +49,7 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
           release_name: V${{ steps.package-version.outputs.current-version}}-beta
-          body: |
-            "${COMMIT_MESSAGE}"
-            printenv
+          body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
       - name: Create prod Release
@@ -65,8 +61,6 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}
           release_name: V${{ steps.package-version.outputs.current-version}}
-          body: |
-            "${COMMIT_MESSAGE}"
-            printenv
+          body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
