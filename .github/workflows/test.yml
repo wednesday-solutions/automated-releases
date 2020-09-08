@@ -21,8 +21,6 @@ jobs:
         run: |
           MSG=$(git log --format=%B -n ${{ github.event.after }})
           echo "::set-env name=COMMIT_MESSAGE::${MSG}"
-          echo "$COMMIT_MESSAGE"
-          echo "$MSG"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -40,7 +38,7 @@ jobs:
           tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: |
-            ${{ steps.DevelopChangelog.outputs.changelog }}
+            "$COMMIT_MESSAGE"
           draft: false
           prerelease: false
       - name: Create beta Release
@@ -53,7 +51,7 @@ jobs:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
           release_name: V${{ steps.package-version.outputs.current-version}}-beta
           body: |
-            ${{ steps.QAChangelog.outputs.changelog }}
+            "$COMMIT_MESSAGE"
           draft: false
           prerelease: false
       - name: Create prod Release
@@ -66,6 +64,6 @@ jobs:
           tag_name: ${{ steps.package-version.outputs.current-version}}
           release_name: V${{ steps.package-version.outputs.current-version}}
           body: |
-            ${{ steps.Changelog.outputs.changelog }}
+            "$COMMIT_MESSAGE"
           draft: false
           prerelease: false
