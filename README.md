@@ -1,1 +1,1 @@
-# testing-automated-releases
+# automated-releases
