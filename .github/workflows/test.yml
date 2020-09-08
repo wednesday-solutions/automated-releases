@@ -14,6 +14,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Develop Changelog
+        if: github.ref == 'refs/heads/develop'
+        uses: scottbrenner/generate-changelog-action@master
+        id: DevelopChangelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: QA Changelog
+        if: github.ref == 'refs/heads/qa'
+        uses: scottbrenner/generate-changelog-action@master
+        id: QAChangelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: Changelog
+        if: github.ref == 'refs/heads/master'
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -25,12 +45,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
-          release_name: Release ${{ steps.package-version.outputs.current-version}}-alpha
-          target_commitish: 'develop'
+          release_name: ${{ steps.package-version.outputs.current-version}}-alpha
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            ${{ steps.DevelopChangelog.outputs.changelog }}
+          target_commitish: 'develop'
           draft: false
           prerelease: false
       - name: Create beta Release
@@ -41,12 +59,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
-          release_name: Release ${{ steps.package-version.outputs.current-version}}-beta
-          target_commitish: 'qa'
+          release_name: ${{ steps.package-version.outputs.current-version}}-beta
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            ${{ steps.QAChangelog.outputs.changelog }}
+          target_commitish: 'qa'
           draft: false
           prerelease: false
       - name: Create prod Release
@@ -57,11 +73,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}
-          release_name: Release ${{ steps.package-version.outputs.current-version}}
-          target_commitish: 'master'
+          release_name: ${{ steps.package-version.outputs.current-version}}
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            ${{ steps.Changelog.outputs.changelog }}
+          target_commitish: 'master'
           draft: false
           prerelease: false
