@@ -16,6 +16,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
            echo ::set-env name=COMMIT_MESSAGE::$(git log --format=%B -n 1 ${{ github.event.after }})
@@ -31,7 +36,8 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
-          body: ${{ env.COMMIT_MESSAGE }}
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
           draft: false
           prerelease: false
       - name: Create beta Release
