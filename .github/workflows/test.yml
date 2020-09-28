@@ -72,8 +72,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-test1
+          tag_name: ${{ steps.package-version.outputs.current-version}}-test2
           release_name: V${{ steps.package-version.outputs.current-version}}
-          body: "- [${{ env.COMMIT_MESSAGE }}](https://github.com/{{ github.repository }}/${{ github.event.repository.name }}/commit/${{ github.event.after }})"
+          body: "- [${{ env.COMMIT_MESSAGE }}](https://github.com/${{ github.repository }}/${{ github.event.repository.name }}/commit/${{ github.event.after }})"
           draft: false
           prerelease: false
