@@ -27,8 +27,8 @@ jobs:
           arr=""
           for i in "$(git log --oneline ${{ github.event.before }}..${{ github.event.after }})"
           do
-            hash = echo $i | $(awk '{print $1;}'$i+$'\n')
-            msg = echo $i | $(awk '{print $2;}'$i+$'\n')
+            hash = ${i:1:7}
+            msg = ${i:8:}
             arr+= "- [${msg}](https://github.com/${{ github.repository }}/commit/${hash})"
           done
           echo ::set-env name=COMMIT_MESSAGE::::${arr}
