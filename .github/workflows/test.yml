@@ -24,7 +24,7 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
-          echo ::set-env name=COMMIT_MESSAGE::$(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
+          echo ::set-env name=COMMIT_MESSAGE::$(git log --format=%h ${{ github.event.before }}..${{ github.event.after }}
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
