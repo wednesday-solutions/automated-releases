@@ -29,8 +29,8 @@ jobs:
           do
             hash = ${line:1:7}
             msg = ${line:8:}
-            arr+= "- [$msg](https://github.com/${{ github.repository }}/commit/$hash)"
-          done < "$(git log --oneline ${{ github.event.before }}..${{ github.event.after }})"
+            arr+= "- [$msg](https://github.com/${{ github.repository }}/commit/$hash)\n"
+          done < "$(git log --format=%B%H ${{ github.event.before }}..${{ github.event.after }})"
           echo ::set-env name=COMMIT_MESSAGE::${arr}
       - name: get-npm-version
         id: package-version
