@@ -27,7 +27,7 @@ jobs:
           arr=""
           while read line
           do
-            msg = $(git log --format=%B $line)
+            msg = $(git log --format=%B $line)+'1'
             arr+= "- [$msg](https://github.com/${{ github.repository }}/commit/$line)\n"
           done < "$(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})"
           echo ::set-env name=COMMIT_MESSAGE::${arr}
