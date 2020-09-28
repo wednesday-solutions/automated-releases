@@ -27,7 +27,7 @@ jobs:
           arr=""
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
-            arr+="- [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
+            arr+="- [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>\n"
           done
           echo ::set-env name=COMMIT_MESSAGE::$arr
       - name: get-npm-version
