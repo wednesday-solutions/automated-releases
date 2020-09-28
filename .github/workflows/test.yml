@@ -24,7 +24,14 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
-          echo ::set-env name=COMMIT_MESSAGE::$(git log --format=%B -n 1 ${{ github.event.after }})
+          arr=""
+          for i in "$(git log --oneline ${{ github.event.before }}..${{ github.event.after }})"
+          do
+            hash = echo $i | awk '{print $1;}'$i+$'\n'
+            msg = echo $i | awk '{print $2;}'$i+$'\n'
+            arr+= "- [${msg}](https://github.com/${{ github.repository }}/commit/${hash})"
+          done
+          echo ::set-env name=COMMIT_MESSAGE::::${arr}
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -74,6 +81,6 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-test3
           release_name: V${{ steps.package-version.outputs.current-version}}
-          body: "- [${{ env.COMMIT_MESSAGE }}](https://github.com/${{ github.repository }}/commit/${{ github.event.after }})"
+          body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
