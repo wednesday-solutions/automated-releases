@@ -24,7 +24,7 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
-          arr=''
+          arr=""
           while read line
           do
             hash = ${line:1:7}
