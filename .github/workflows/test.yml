@@ -24,14 +24,7 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
-          arr = $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
-          outp = ''
-          while read line
-          do
-            msg = $(git log --format=%B $line)+'1'
-            outp+= "- [${msg}](https://github.com/${{ github.repository }}/commit/${line})\n"
-          done < '$arr'
-          echo ::set-env name=COMMIT_MESSAGE::${outp}
+          echo ::set-env name=COMMIT_MESSAGE::$(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
