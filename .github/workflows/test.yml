@@ -4,7 +4,7 @@ on:
       - master
       - develop
       - qa
-      -personal/ali-arsalan
+      - personal/ali-arsalan
 
 name: Create Release
 
@@ -78,4 +78,3 @@ jobs:
 
           draft: false
           prerelease: false
-      
