@@ -24,10 +24,10 @@ jobs:
           REPO: ${{ github.repository }}
       - name: Get Commit Message
         run: |
-          arr = "Commits:$'\n'"
+          arr="Commits:$'\n'"
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
-            arr += $(git log --format=%B $i)
+            arr+=$(git log --format=%B $i)
           done
           echo ::set-env name=COMMIT_MESSAGE::$arr
       - name: get-npm-version
