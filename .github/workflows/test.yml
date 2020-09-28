@@ -25,12 +25,12 @@ jobs:
       - name: Get Commit Message
         run: |
           arr=""
-          for i in "$(git log --oneline ${{ github.event.before }}..${{ github.event.after }})"
+          while read line
           do
-            hash = ${i:1:7}
-            msg = ${i:8:}
+            hash = ${line:1:7}
+            msg = ${line:8:}
             arr+= "- [$msg](https://github.com/${{ github.repository }}/commit/$hash)"
-          done
+          done < "$(git log --oneline ${{ github.event.before }}..${{ github.event.after }})"
           echo ::set-env name=COMMIT_MESSAGE::::${arr}
       - name: get-npm-version
         id: package-version
