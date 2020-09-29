@@ -4,6 +4,7 @@ on:
       - master
       - develop
       - qa
+      - personal/ali-arsalan
 
 name: Create Release
 
