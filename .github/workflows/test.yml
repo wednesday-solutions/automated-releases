@@ -83,6 +83,3 @@ jobs:
             ${{ steps.Changelog.outputs.changelog }}
           draft: false
           prerelease: false
-        name: Update version in package.json
-        uses: maks-stupak/gh-action-bump-version@v7.1.5
-      
