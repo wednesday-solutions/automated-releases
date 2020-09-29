@@ -77,7 +77,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}--test22
+          tag_name: ${{ steps.package-version.outputs.current-version}}-test23
           release_name: V${{ steps.package-version.outputs.current-version}}
           body: |
             ${{ steps.Changelog.outputs.changelog }}
