@@ -71,7 +71,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Create ALIs Release
-        if: github.ref == 'refs/heads/personal/ali-arsalan' && ${{ steps.changelog.outputs.skipped == 'false' }}
+        if: github.ref == 'refs/heads/personal/ali-arsalan'
         id: create_testing_release
         uses: actions/create-release@v1
         env:
