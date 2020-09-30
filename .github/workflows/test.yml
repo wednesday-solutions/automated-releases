@@ -22,7 +22,7 @@ jobs:
         env:
           REPO: ${{ github.repository }}
       - name: View Changelog
-        run: echo 'The Changelog is' ${{ steps.Changelog.outputs.changelog}}
+        run: echo 'The Changelog is' ${{ steps.Changelog.outputs.changelog }}
       - name: Get Commit Message
         run: |
           arr=""
