@@ -22,7 +22,6 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          output-file: "false"
       - name: Get Commit Message
         run: |
           arr=""
