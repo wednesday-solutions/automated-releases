@@ -4,6 +4,7 @@ on:
       - master
       - develop
       - qa
+      - personal/ali-arsalan
 
 name: Create Release
 
@@ -15,20 +16,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          fetch-depth: 2
           ref: ${{ github.event.after }}
       - name: Changelog
         uses: scottbrenner/generate-changelog-action@master
         id: Changelog
         env:
           REPO: ${{ github.repository }}
-      - name: Get Commit Message
-        run: |
-          arr=""
-          for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
-          do
-            arr+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
-          done
-          echo ::set-env name=COMMIT_MESSAGE::"$arr"
       - name: View Changelog
         run: echo $COMMIT_MESSAGE
       - name: get-npm-version
@@ -73,12 +67,11 @@ jobs:
           prerelease: false
       - name: Create ALIs Release
         if: github.ref == 'refs/heads/personal/ali-arsalan'
-        id: create_testing_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}_testAAA
+          tag_name: ${{ steps.package-version.outputs.current-version}}
           release_name: V${{ steps.package-version.outputs.current-version}}
           body: |
             ${{ steps.Changelog.outputs.changelog }}
