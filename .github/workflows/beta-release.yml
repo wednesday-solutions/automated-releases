@@ -32,6 +32,6 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
           release_name: V${{ steps.package-version.outputs.current-version}}-beta
-          body: ${{ steps.Changelog.outputs.changelogs }}
+          body: release-notes.txt
           draft: false
           prerelease: false
