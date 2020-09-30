@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-      - qa
+      - develop
 
-name: Create Beta Release
+name: Create Alpha Release
 
 jobs:
   build:
-    name: Create Beta Release
+    name: Create Alpha Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,13 +25,13 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - name: Create Beta Release
+      - name: Create Alpha Release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-beta
-          release_name: V${{ steps.package-version.outputs.current-version}}-beta
-          body: release-notes.txt
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
+          release_name: V${{ steps.package-version.outputs.current-version}}-alpha
+          body_path: release-notes.txt
           draft: false
           prerelease: false
