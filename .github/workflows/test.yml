@@ -16,6 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          fetch-depth: 2
           ref: ${{ github.event.after }}
       - name: Changelog
         uses: scottbrenner/generate-changelog-action@master
