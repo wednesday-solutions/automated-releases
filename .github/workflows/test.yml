@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 1000
       - name: Changelog
         uses: scottbrenner/generate-changelog-action@master
         id: Changelog
