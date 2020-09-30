@@ -21,8 +21,6 @@ jobs:
         id: Changelog
         env:
           REPO: ${{ github.repository }}
-      - name: View Changelog
-        run: echo ${{ steps.Changelog.outputs.changelog }}
       - name: Get Commit Message
         run: |
           arr=""
@@ -31,6 +29,8 @@ jobs:
             arr+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
           done
           echo ::set-env name=COMMIT_MESSAGE::"$arr"
+      - name: View Changelog
+        run: echo $COMMIT_MESSAGE
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
