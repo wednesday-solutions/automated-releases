@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-      - qa
+      - develop
 
-name: Create Beta Release
+name: Create Alpha Release
 
 jobs:
   build:
-    name: Create Beta Release
+    name: Create Alpha Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,25 +17,25 @@ jobs:
       - name: Changelog
         id: Changelog
         uses: heineiuo/create-changelogs@master
+
+      - name: Generate release notes
+        # Important note: I use https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit for commit format. It makes it really easy to filter commits in the way I've done below.
+        run: git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%s" -i -E --grep="^(build|ci|docs|feat|fix|perf|refactor|style|test)*feat|perf|fix" > release-notes.txt
       - name: Generate changelog
         id: changelog_new
         uses: metcalfc/changelog-generator@v0.4.4
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
-      - name: Generate release notes
-        # Important note: I use https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit for commit format. It makes it really easy to filter commits in the way I've done below.
-        run: git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%s" -i -E --grep="^(build|ci|docs|feat|fix|perf|refactor|style|test)*feat|perf|fix" > release-notes.txt
-
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
-      - name: Create Beta Release
+      - name: Create Alpha Release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-beta
-          release_name: V${{ steps.package-version.outputs.current-version}}-beta
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
+          release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ steps.changelog_new.outputs.changelog }}
           draft: false
           prerelease: false
