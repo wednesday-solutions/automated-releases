@@ -22,6 +22,8 @@ jobs:
         id: Changelog
         env:
           REPO: ${{ github.repository }}
+      - name: View Changelog
+        run: echo 'The Changelog is' ${{ steps.Changelog.outputs}}
       - name: Get Commit Message
         run: |
           arr=""
