@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - qa
+
+name: Create Beta Release
+
+jobs:
+  build:
+    name: Create Beta Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          ref: ${{ github.event.after }}
+      - name: Changelog
+        uses: scottbrenner/generate-changelog-action@master
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+      - name: Create Beta Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.package-version.outputs.current-version}}-beta
+          release_name: V${{ steps.package-version.outputs.current-version}}-beta
+          body: ${{ env.COMMIT_MESSAGE }}
+          draft: false
+          prerelease: false
