@@ -80,7 +80,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}_testA2
+          tag_name: ${{ steps.package-version.outputs.current-version}}_testA3
           release_name: V${{ steps.package-version.outputs.current-version}}
           body: ${{ steps.changelog.outputs.clean_changelog }}
           draft: false
