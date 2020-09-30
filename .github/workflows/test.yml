@@ -77,7 +77,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}_testAA
+          tag_name: ${{ steps.package-version.outputs.current-version}}_testAAA
           release_name: V${{ steps.package-version.outputs.current-version}}
           body: ${{ steps.Changelog.outputs.clean_changelog }}
           draft: false
