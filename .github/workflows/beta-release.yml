@@ -17,7 +17,11 @@ jobs:
       - name: Changelog
         id: Changelog
         uses: heineiuo/create-changelogs@master
-        
+
+      - name: Generate release notes
+        # Important note: I use https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit for commit format. It makes it really easy to filter commits in the way I've done below.
+        run: git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%s" -i -E --grep="^(build|ci|docs|feat|fix|perf|refactor|style|test)*feat|perf|fix" > release-notes.txt
+
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -28,6 +32,6 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
           release_name: V${{ steps.package-version.outputs.current-version}}-beta
-          body: ${{ steps.Changelog.outputs.changelogs }}
+          body: release-notes.txt
           draft: false
           prerelease: false
