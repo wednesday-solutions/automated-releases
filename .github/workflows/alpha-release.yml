@@ -31,39 +31,39 @@ jobs:
             IFS=":" read -a arr <<< $(git log --format=%B -n 1 $i)
               if [ "${arr[0]}" == "fix" ]
                   then
-                      fix+="&#8226; $i - ${arr[1]}<br/>"
+                      fix+="  &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "feat" ]
                   then
-                      feat+="&#8226; $i - ${arr[1]}<br/>"
+                      feat+=" &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "ci" ]
                   then
-                      ci+="&#8226; $i - ${arr[1]}<br/>"
+                      ci+=" &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "docs" ]
                   then
-                      docs+="&#8226; $i - ${arr[1]}<br/>"
+                      docs+=" &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "build" ]
                   then
-                      build+="&#8226; $i - ${arr[1]}<br/>"
+                      build+="  &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "perf" ]
                   then
-                      perf+="&#8226; $i - ${arr[1]}<br/>"
+                      perf+=" &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "refactor" ]
                   then
-                      refactor+="&#8226; $i - ${arr[1]}<br/>"
+                      refactor+=" &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "style" ]
                   then
-                      style+="&#8226; $i - ${arr[1]}<br/>"
+                      style+="  &#8226; $i - ${arr[1]}<br/>"
               fi
               if [ "${arr[0]}" == "test" ]
                   then
-                      test+="&#8226; $i - ${arr[1]}<br/>"
+                      test+=" &#8226; $i - ${arr[1]}<br/>"
               fi
           done
           if [ ! -z "${fix}" ]
