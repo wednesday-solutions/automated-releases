@@ -96,7 +96,7 @@ jobs:
           fi
           if [ ! -z "${test}" ]
               then
-              msg+="<h5>Added Tests<br/>$test"
+              msg+="<h5>Added Tests<h5><br/>$test"
           fi
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: get-npm-version
