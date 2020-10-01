@@ -78,7 +78,7 @@ jobs:
               fi
                   others+=" &#8226; $i - ${cmmsg}<br/>"
           done
-          if [ ! -z "${fix}" ]
+          if [ ! -z "${fix}" ] 
             then
               msg+="<h5>Bug Fixes</h5>$fix"
           fi
