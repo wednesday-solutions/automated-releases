@@ -102,7 +102,7 @@ jobs:
               then
               msg+="### Changed Style<br/>$test"
           fi
-          echo ::set-env name=COMMIT_MESSAGE::"${fix}"
+          echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
