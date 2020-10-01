@@ -17,11 +17,24 @@ jobs:
       - name: Get Commit Message
         run: |
           msg=""
+          fix=()
+          build=()
+          ci=()
+          docs=()
+          feat=()
+          perf=()
+          refactor=()
+          style=()
+          test=()
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
+            IFS=":" read -a arr1 <<< $myvar
+            if [ $arr1[0] == 'fix' ]
+            then
+              fix+=$arr1[1]
             msg+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
           done
-          echo ::set-env name=COMMIT_MESSAGE::"$msg"
+          echo ::set-env name=COMMIT_MESSAGE::"$fix"
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
