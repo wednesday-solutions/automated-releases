@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - personal/ali-arsalan
 
 name: Create Alpha Release
 
@@ -28,42 +28,42 @@ jobs:
           test=""
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
-            IFS=":" read -a arr <<< $(git log --format=%B -n 1 $i)
-              if [ "${arr[0]}" == "fix" ]
+            IFS=":" read -a type cmmsg <<< $(git log --format=%B -n 1 $i)
+              if [ "${type}" == "fix" ]
                   then
-                      fix+="  &#8226; $i - ${arr[1]}<br/>"
+                      fix+="  &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "feat" ]
+              if [ "${type}" == "feat" ]
                   then
-                      feat+=" &#8226; $i - ${arr[1]}<br/>"
+                      feat+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "ci" ]
+              if [ "${type}" == "ci" ]
                   then
-                      ci+=" &#8226; $i - ${arr[1]}<br/>"
+                      ci+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "docs" ]
+              if [ "${type}" == "docs" ]
                   then
-                      docs+=" &#8226; $i - ${arr[1]}<br/>"
+                      docs+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "build" ]
+              if [ "${type}" == "build" ]
                   then
-                      build+="  &#8226; $i - ${arr[1]}<br/>"
+                      build+="  &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "perf" ]
+              if [ "${type}" == "perf" ]
                   then
-                      perf+=" &#8226; $i - ${arr[1]}<br/>"
+                      perf+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "refactor" ]
+              if [ "${type}" == "refactor" ]
                   then
-                      refactor+=" &#8226; $i - ${arr[1]}<br/>"
+                      refactor+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "style" ]
+              if [ "${type}" == "style" ]
                   then
-                      style+="  &#8226; $i - ${arr[1]}<br/>"
+                      style+="  &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${arr[0]}" == "test" ]
+              if [ "${type}" == "test" ]
                   then
-                      test+=" &#8226; $i - ${arr[1]}<br/>"
+                      test+=" &#8226; $i - ${cmmsg}<br/>"
               fi
           done
           if [ ! -z "${fix}" ]
