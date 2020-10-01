@@ -32,6 +32,7 @@ jobs:
             if [ $arr1[0] == 'fix' ]
             then
               fix+=$arr1[1]
+              echo $fix[1]
             fi
             msg+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
           done
