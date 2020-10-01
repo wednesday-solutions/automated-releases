@@ -31,6 +31,7 @@ jobs:
             IFS=":" read -a arr1 <<< $myvar
             if [ $arr1[0] == 'fix' ]
             then
+              echo "ALI"
               fix+=$arr1[1]
               echo $fix[1]
             fi
