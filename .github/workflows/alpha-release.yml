@@ -102,7 +102,7 @@ jobs:
               then
               msg+="<h5>Refactored</h5>$refactor"
           fi
-          if [ ! -z "${style}" ] 
+          if [ ! -z "${style}" ]
               then
               msg+="<h5>Changed Style</h5>$style"
           fi
