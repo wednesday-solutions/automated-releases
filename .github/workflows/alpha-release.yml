@@ -31,52 +31,53 @@ jobs:
           do
             IFS=":" read -r type cmmsg <<< $(git log --format=%B -n 1 $i)
             type="${type}" | xargs
+            text_msg = "&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>"
               if [ "${type}" == "fix" ]
                   then
-                      fix+="  &#8226; $i - ${cmmsg}<br/>"
+                      fix+= "${text_msg}"
                       continue
               fi
               if [ "${type}" == "feat" ]
                   then
-                      feat+=" &#8226; $i - ${cmmsg}<br/>"
+                      feat+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "ci" ]
                   then
-                      ci+=" &#8226; $i - ${cmmsg}<br/>"
+                      ci+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "docs" ]
                   then
-                      docs+=" &#8226; $i - ${cmmsg}<br/>"
+                      docs+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "build" ]
                   then
-                      build+="  &#8226; $i - ${cmmsg}<br/>"
+                      build+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "perf" ]
                   then
-                      perf+=" &#8226; $i - ${cmmsg}<br/>"
+                      perf+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "refactor" ]
                   then
-                      refactor+=" &#8226; $i - ${cmmsg}<br/>"
+                      refactor+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "style" ]
                   then
-                      style+="  &#8226; $i - ${cmmsg}<br/>"
+                      style+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "test" ]
                   then
-                      test+=" &#8226; $i - ${cmmsg}<br/>"
+                      test+="${text_msg}"
                       continue
               fi
-                  others+=" &#8226; $i - ${cmmsg}<br/>"
+                  others+="${text_msg}"
           done
           if [ ! -z "${fix}" ]
             then
@@ -118,6 +119,7 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+      -
       - name: Create Alpha Release
         uses: actions/create-release@latest
         env:
