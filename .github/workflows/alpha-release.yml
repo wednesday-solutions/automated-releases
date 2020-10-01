@@ -68,35 +68,35 @@ jobs:
           done
           if [ ! -z "${fix}" ]
             then
-              msg+="### Bug Fixes<br/>$fix"
+              msg+="<h5>Bug Fixes<h5><br/>$fix"
           fi
           if [ ! -z "${feat}" ]
               then
-              msg+="### New Features<br/>$feat"
+              msg+="<h5>New Features<h5><br/>$feat"
           fi
           if [ ! -z "${ci}" ]
               then
-              msg+="### Continuous Integration<br/>$ci"
+              msg+="<h5>Continuous Integration<h5><br/>$ci"
           fi
           if [ ! -z "${docs}" ]
               then
-              msg+="### Documentation<br/>$docs"
+              msg+="<h5>Documentation<h5><br/>$docs"
           fi
           if [ ! -z "${perf}" ]
               then
-              msg+="### Performance Enhancement<br/>$perf"
+              msg+="<h5>Performance Enhancement<h5><br/>$perf"
           fi
           if [ ! -z "${refactor}" ]
               then
-              msg+="### Refactored<br/>$refactor"
+              msg+="<h5>Refactored<h5><br/>$refactor"
           fi
           if [ ! -z "${style}" ]
               then
-              msg+="### Changed Style<br/>$style"
+              msg+="<h5>Changed Style<h5><br/>$style"
           fi
           if [ ! -z "${test}" ]
               then
-              msg+="### Added Tests<br/>$test"
+              msg+="<h5>Added Tests<br/>$test"
           fi
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: get-npm-version
