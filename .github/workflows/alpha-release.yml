@@ -34,7 +34,7 @@ jobs:
             text_msg = "&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>"
               if [ "${type}" == "fix" ]
                   then
-                      fix+= "${text_msg}"
+                      fix+="${text_msg}"
                       continue
               fi
               if [ "${type}" == "feat" ]
