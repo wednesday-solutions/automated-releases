@@ -17,7 +17,7 @@ jobs:
       - name: Get Commit Message
         run: |
           msg=""
-          fix=""
+          fix="" 
           build=""
           ci=""
           docs=""
