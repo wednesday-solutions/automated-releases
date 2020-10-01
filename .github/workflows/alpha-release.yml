@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - personal/ali-arsalan
 
 name: Create Alpha Release
 
@@ -17,7 +17,7 @@ jobs:
       - name: Changelog
         id: Changelog
         uses: heineiuo/create-changelogs@master\
-      - name: Generate changelog
+      - name: Gener`ate changelog
         id: changelog_new
         uses: metcalfc/changelog-generator@v0.4.4
         with:
