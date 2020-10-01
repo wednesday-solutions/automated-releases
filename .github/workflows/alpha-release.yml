@@ -28,11 +28,13 @@ jobs:
           test=""
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
-            IFS=":" read -a arr <<< "$(git log --format=%B -n 1 $i)"
-            fix+="$arr[1]"
-            # msg+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
+            IFS=":" read -a arr <<< $(git log --format=%B -n 1 $i)
+              if [ "${arr[0]}" == "fix" ]
+                  then
+                      fix+="&#8226; $i - ${arr[1]}"
+              fi
           done
-          echo ::set-env name=COMMIT_MESSAGE::"$fix"
+          echo ::set-env name=COMMIT_MESSAGE::"${fix}"
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -41,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha14
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha12
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ env.COMMIT_MESSAGE }}
           draft: false
