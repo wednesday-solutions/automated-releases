@@ -29,7 +29,7 @@ jobs:
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
             IFS=":" read -r type cmmsg <<< $(git log --format=%B -n 1 $i)
-            type=${type##*( )}
+            type="${type}" | xargs
               if [ "${type}" == "fix" ]
                   then
                       fix+="  &#8226; $i - ${cmmsg}<br/>"
