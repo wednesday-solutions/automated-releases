@@ -31,9 +31,77 @@ jobs:
             IFS=":" read -a arr <<< $(git log --format=%B -n 1 $i)
               if [ "${arr[0]}" == "fix" ]
                   then
-                      fix+="&#8226; $i - ${arr[1]}"
+                      fix+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "feat" ]
+                  then
+                      feat+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "ci" ]
+                  then
+                      ci+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "docs" ]
+                  then
+                      docs+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "build" ]
+                  then
+                      build+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "perf" ]
+                  then
+                      perf+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "refactor" ]
+                  then
+                      refactor+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "style" ]
+                  then
+                      style+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${arr[0]}" == "test" ]
+                  then
+                      test+="&#8226; $i - ${arr[1]}<br/>"
+              fi
+              if [ "${fix}" != ""]
+                then
+                msg+="### Bug Fixes<br/>$fix"
               fi
           done
+          if [ "${fix}" != ""]
+              then
+              msg+="### Bug Fixes<br/>$fix"
+          fi
+          if [ "${feat}" != ""]
+              then
+              msg+="### New Features<br/>$feat"
+          fi
+          if [ "${ci}" != ""]
+              then
+              msg+="### Continuous Integration<br/>$ci"
+          fi
+          if [ "${docs}" != ""]
+              then
+              msg+="### Documentation<br/>$docs"
+          fi
+          if [ "${perf}" != ""]
+              then
+              msg+="### Performance Enhancement<br/>$perf"
+          fi
+          if [ "${refactor}" != ""]
+              then
+              msg+="### Refactored<br/>$refactor"
+          fi
+          if [ "${style}" != ""]
+              then
+              msg+="### Changed Style<br/>$style"
+          fi
+          if [ "${test}" != ""]
+              then
+              msg+="### Changed Style<br/>$test"
+          fi
           echo ::set-env name=COMMIT_MESSAGE::"${fix}"
       - name: get-npm-version
         id: package-version
