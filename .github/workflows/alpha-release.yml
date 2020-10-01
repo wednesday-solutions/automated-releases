@@ -98,7 +98,7 @@ jobs:
               then
               msg+="<h5>Performance Enhancement</h5>$perf"
           fi
-          if [ ! -z "${refactor}" ]
+          if [ ! -z "${refactor}" ] 
               then
               msg+="<h5>Refactored</h5>$refactor"
           fi
