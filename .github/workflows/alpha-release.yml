@@ -28,42 +28,42 @@ jobs:
           test=""
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
-            IFS=":" read -a type cmmsg <<< $(git log --format=%B -n 1 $i)
-              if [ "${type}" == "fix" ]
+            IFS=":" read -a arr <<< $(git log --format=%B -n 1 $i)
+              if [ "${arr[0]}" == "fix" ]
                   then
-                      fix+="  &#8226; $i - ${cmmsg}<br/>"
+                      fix+="  &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "feat" ]
+              if [ "${arr[0]}" == "feat" ]
                   then
-                      feat+=" &#8226; $i - ${cmmsg}<br/>"
+                      feat+=" &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "ci" ]
+              if [ "${arr[0]}" == "ci" ]
                   then
-                      ci+=" &#8226; $i - ${cmmsg}<br/>"
+                      ci+=" &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "docs" ]
+              if [ "${arr[0]}" == "docs" ]
                   then
-                      docs+=" &#8226; $i - ${cmmsg}<br/>"
+                      docs+=" &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "build" ]
+              if [ "${arr[0]}" == "build" ]
                   then
-                      build+="  &#8226; $i - ${cmmsg}<br/>"
+                      build+="  &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "perf" ]
+              if [ "${arr[0]}" == "perf" ]
                   then
-                      perf+=" &#8226; $i - ${cmmsg}<br/>"
+                      perf+=" &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "refactor" ]
+              if [ "${arr[0]}" == "refactor" ]
                   then
-                      refactor+=" &#8226; $i - ${cmmsg}<br/>"
+                      refactor+=" &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "style" ]
+              if [ "${arr[0]}" == "style" ]
                   then
-                      style+="  &#8226; $i - ${cmmsg}<br/>"
+                      style+="  &#8226; $i - ${arr[1]}<br/>"
               fi
-              if [ "${type}" == "test" ]
+              if [ "${arr[0]}" == "test" ]
                   then
-                      test+=" &#8226; $i - ${cmmsg}<br/>"
+                      test+=" &#8226; $i - ${arr[1]}<br/>"
               fi
           done
           if [ ! -z "${fix}" ]
@@ -107,7 +107,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha21
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha22
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ env.COMMIT_MESSAGE }}
           draft: false
