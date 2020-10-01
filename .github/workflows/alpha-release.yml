@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - personal/ali-arsalan
 
 name: Create Alpha Release
 
