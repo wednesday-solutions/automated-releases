@@ -42,7 +42,7 @@ jobs:
                   then
                       ci+=" &#8226; $i - ${cmmsg}<br/>"
               fi
-              if [ "${type}" == "docs" ] 
+              if [ "${type}" == "docs" ]
                   then
                       docs+=" &#8226; $i - ${cmmsg}<br/>"
               fi
