@@ -36,7 +36,7 @@ jobs:
             fi
             msg+="&#8226; [$(git log --format=%B -n 1 $i)](https://github.com/${{ github.repository }}/commit/$i)<br/>"
           done
-          echo ::set-env name=COMMIT_MESSAGE::$fix[1]
+          echo ::set-env name=COMMIT_MESSAGE::"$fix"
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -45,7 +45,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha9
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha10
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ env.COMMIT_MESSAGE }}
           draft: false
