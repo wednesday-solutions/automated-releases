@@ -121,6 +121,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           npm --no-git-tag-version version minor
+          git push origin personal/ali-arsalan
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
