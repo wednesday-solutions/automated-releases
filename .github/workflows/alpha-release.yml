@@ -118,7 +118,7 @@ jobs:
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
         run: |
-          echo $(npm version major)
+          echo $(npm version -no-commit-hooks minor)
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -127,7 +127,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha31
+          tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
           release_name: V${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ env.COMMIT_MESSAGE }}
           draft: false
