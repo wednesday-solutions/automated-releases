@@ -119,6 +119,12 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
+      - name: Bump version and push tag
+        uses: minddocdev/mou-version-action@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          prefix: v
+          defaultBump: patch
       - name: Create Alpha Release
         uses: actions/create-release@latest
         env:
