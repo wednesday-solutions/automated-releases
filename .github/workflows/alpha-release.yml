@@ -117,12 +117,8 @@ jobs:
           fi
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
-        uses: minddocdev/mou-version-action@v1.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: v
-          packageJsonPath: package.json
-          defaultBump: minor
+        run: |
+          echo $(npm version minor)
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
