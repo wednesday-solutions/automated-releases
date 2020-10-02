@@ -121,7 +121,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           defaultBump: minor
-          prefix: mygroup/
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
