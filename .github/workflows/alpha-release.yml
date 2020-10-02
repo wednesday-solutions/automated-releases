@@ -119,7 +119,7 @@ jobs:
       - name: Bump version and push tag
         run: |
           echo $(npm --no-git-tag-version version minor)
-          echo $(git push)
+          echo $(npm publish)
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
