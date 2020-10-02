@@ -119,6 +119,7 @@ jobs:
       - name: Bump version and push tag
         uses: minddocdev/mou-version-action@v1.0.0
         with:
+          npm: true
           token: ${{ secrets.GITHUB_TOKEN }}
           defaultBump: minor
       - name: get-npm-version
