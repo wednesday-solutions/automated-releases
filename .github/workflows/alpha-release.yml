@@ -116,14 +116,16 @@ jobs:
               msg+="<h5>Others</h5>$others"
           fi
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
       - name: Bump version and push tag
         uses: minddocdev/mou-version-action@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          prefix: mygroup/
+          prefix: v
+          npm: true
+          defaultBump: minor
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
       - name: Create Alpha Release
         uses: actions/create-release@latest
         env:
