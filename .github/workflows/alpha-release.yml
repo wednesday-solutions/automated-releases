@@ -118,7 +118,7 @@ jobs:
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
         run: |
-          echo $(npm version minor)
+          echo $(npm --no-git-tag-version version minor)
           echo $(git push --tags)
       - name: get-npm-version
         id: package-version
