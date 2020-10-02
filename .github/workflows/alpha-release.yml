@@ -121,7 +121,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           prefix: v
-          npm: true
+          packageJsonPath: package.json
           defaultBump: minor
       - name: get-npm-version
         id: package-version
