@@ -117,7 +117,8 @@ jobs:
           fi
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
-        run: npm version minor --allow-empty --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+        run: npm --no-git-tag-version version minor
+        run: git commit --allow-empty --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
