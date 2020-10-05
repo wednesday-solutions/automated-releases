@@ -91,6 +91,10 @@ jobs:
               then
               msg+="<h5>Continuous Integration</h5>$ci"
           fi
+          if [ ! -z "${build}" ]
+              then
+              msg+="<h5>Build</h5>$ci"
+          fi
           if [ ! -z "${docs}" ]
               then
               msg+="<h5>Documentation</h5>$docs"
