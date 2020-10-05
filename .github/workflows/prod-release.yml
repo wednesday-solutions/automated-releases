@@ -55,7 +55,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
           npm version major
-          git push && git push --tags
+          git push
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
