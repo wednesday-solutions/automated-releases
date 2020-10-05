@@ -25,7 +25,7 @@ jobs:
             flag=1
             for i in "${!category[@]}"
             do
-                if [ "${type}" == "$i" ]
+                if [ "${type}" == "$i" ] 
                 then
                     category[$i]+="${text_msg}"
                     flag=0
