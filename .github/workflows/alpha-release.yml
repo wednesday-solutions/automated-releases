@@ -118,10 +118,12 @@ jobs:
           echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
         run: |
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          npm version minor
-          git push --tags
+          cd "$GITHUB_WORKSPACE"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          npm version minor -m "Upgrade to %s"
+          git push && git push --tags
+          npm publish
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
