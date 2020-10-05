@@ -39,7 +39,7 @@ jobs:
                     cata[others]+="${text_msg}"
                 fi
             done
-            for i in "${!cata[@]}" 
+            for i in "${!cata[@]}"
             do
                 if [ ! -z "${cata[$i]}" ] && [ "others" != "$i" ]
                     then
