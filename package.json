@@ -1,6 +1,6 @@
 {
   "name": "automated-releases",
-  "version": "3.0.1",
+  "version": "1.12.2",
   "description": "",
   "main": "index.js",
   "scripts": {
