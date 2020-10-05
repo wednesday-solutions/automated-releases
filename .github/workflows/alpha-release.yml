@@ -30,7 +30,7 @@ jobs:
             do
                 if [ "${type}" == "$i" ]
                 then
-                    category[$i]+="${text_msg}"
+                    category[$i]+="${text_msg}" 
                     flag=0
                     break
                 fi
