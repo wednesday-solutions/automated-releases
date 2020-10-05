@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - personal/ali-arsalan
+      - develop
 
 name: Create Alpha Release
 
@@ -27,7 +27,7 @@ jobs:
             flag=1
             for i in "${!cata[@]}"
             do
-                if [ "${type}" == "$i" ]
+                if [ "${type}" == "$i" ] 
                 then
                     cata[$i]+="${text_msg}"
                     flag=0
