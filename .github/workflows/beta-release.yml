@@ -14,19 +14,115 @@ jobs:
         uses: actions/checkout@v2
       - run: |
           git fetch --prune --unshallow --tags
-      - name: Changelog
-        id: Changelog
-        uses: heineiuo/create-changelogs@master
-      - name: Generate changelog
-        id: changelog_new
-        uses: metcalfc/changelog-generator@v0.4.4
-        with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          base-ref: 'qa'
-      - name: Generate release notes
-        # Important note: I use https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit for commit format. It makes it really easy to filter commits in the way I've done below.
-        run: git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%s" -i -E --grep="^(build|ci|docs|feat|fix|perf|refactor|style|test)*feat|perf|fix" > release-notes.txt
-
+      - name: Get Commit Message
+        run: |
+          msg=""
+          fix=""
+          build=""
+          ci=""
+          docs=""
+          feat=""
+          perf=""
+          refactor=""
+          style=""
+          test=""
+          others=""
+          for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
+          do
+            IFS=":" read -r type cmmsg <<< $(git log --format=%B -n 1 $i)
+            type="${type}" | xargs
+            text_msg="&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>"
+              if [ "${type}" == "fix" ]
+                  then
+                      fix+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "feat" ]
+                  then
+                      feat+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "ci" ]
+                  then
+                      ci+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "docs" ]
+                  then
+                      docs+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "build" ]
+                  then
+                      build+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "perf" ]
+                  then
+                      perf+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "refactor" ]
+                  then
+                      refactor+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "style" ]
+                  then
+                      style+="${text_msg}"
+                      continue
+              fi
+              if [ "${type}" == "test" ]
+                  then
+                      test+="${text_msg}"
+                      continue
+              fi
+                  others+="${text_msg}"
+          done
+          if [ ! -z "${fix}" ]
+            then
+              msg+="<h5>Bug Fixes</h5>$fix"
+          fi
+          if [ ! -z "${feat}" ]
+              then
+              msg+="<h5>New Features</h5>$feat"
+          fi
+          if [ ! -z "${ci}" ]
+              then
+              msg+="<h5>Continuous Integration</h5>$ci"
+          fi
+          if [ ! -z "${docs}" ]
+              then
+              msg+="<h5>Documentation</h5>$docs"
+          fi
+          if [ ! -z "${perf}" ]
+              then
+              msg+="<h5>Performance Enhancement</h5>$perf"
+          fi
+          if [ ! -z "${refactor}" ]
+              then
+              msg+="<h5>Refactored</h5>$refactor"
+          fi
+          if [ ! -z "${style}" ]
+              then
+              msg+="<h5>Changed Style</h5>$style"
+          fi
+          if [ ! -z "${test}" ]
+              then
+              msg+="<h5>Added Tests</h5>$test"
+          fi
+          if [ ! -z "${others}" ]
+              then
+              msg+="<h5>Others</h5>$others"
+          fi
+          echo ::set-env name=COMMIT_MESSAGE::"${msg}"
+      - name: Bump version and push tag
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config user.name "$GITHUB_ACTOR"
+          npm version patch
+          git push && git push --tags
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
@@ -37,6 +133,6 @@ jobs:
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-beta
           release_name: V${{ steps.package-version.outputs.current-version}}-beta
-          body: ${{ steps.changelog_new.outputs.changelog }}
+          body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
