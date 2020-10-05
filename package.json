@@ -1,6 +1,10 @@
 {
   "name": "automated-releases",
+<<<<<<< HEAD
   "version": "1.5.3",
+=======
+  "version": "2.0.0",
+>>>>>>> 6b52af183d8eaee04fd623232d6cc2bde130a8df
   "description": "",
   "main": "index.js",
   "scripts": {
