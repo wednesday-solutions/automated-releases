@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - personal/ali-arsalan
+      - develop
 
 name: Create Production Release
 
