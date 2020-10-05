@@ -33,7 +33,7 @@ jobs:
                     flag=0
                     break
                 fi
-            done
+            done 
                 if [ $flag -eq 1 ]
                 then
                     cata[others]+="${text_msg}"

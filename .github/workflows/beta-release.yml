@@ -16,110 +16,41 @@ jobs:
           git fetch --prune --unshallow --tags
       - name: Get Commit Message
         run: |
+          declare -A cata=( [fix]="" [build]="" [ci]="" [docs]="" [feat]="" [perf]="" [refactor]="" [style]="" [test]="" [others]="") 
+          declare -A cataTitle=( [fix]="<h5>Bug Fixes</h5>" [build]="<h5>Build</h5>" [ci]="<h5>Continuous Integration</h5>" [docs]="<h5>Documentation</h5>" [feat]="<h5>New Features</h5>" [perf]="<h5>Performance Enhancement</h5>" [refactor]="<h5>Refactored</h5>" [style]="<h5>Changed Style</h5>" [test]="<h5>Added Tests</h5>" [others]="<h5>Others</h5>") 
           msg=""
-          fix=""
-          build=""
-          ci=""
-          docs=""
-          feat=""
-          perf=""
-          refactor=""
-          style=""
-          test=""
-          others=""
           for i in $(git log --format=%h ${{ github.event.before }}..${{ github.event.after }})
           do
             IFS=":" read -r type cmmsg <<< $(git log --format=%B -n 1 $i)
             type="${type}" | xargs
             text_msg="&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>"
-              if [ "${type}" == "fix" ]
-                  then
-                      fix+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "feat" ]
-                  then
-                      feat+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "ci" ]
-                  then
-                      ci+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "docs" ]
-                  then
-                      docs+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "build" ]
-                  then
-                      build+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "perf" ]
-                  then
-                      perf+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "refactor" ]
-                  then
-                      refactor+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "style" ]
-                  then
-                      style+="${text_msg}"
-                      continue
-              fi
-              if [ "${type}" == "test" ]
-                  then
-                      test+="${text_msg}"
-                      continue
-              fi
-                  others+="${text_msg}"
-          done
-          if [ ! -z "${fix}" ]
+            flag=1
+            for i in "${!cata[@]}"
+            do
+                if [ "${type}" == "$i" ]
+                then
+                    cata[$i]+="${text_msg}"
+                    flag=0
+                    break
+                fi
+            done
+                if [ $flag -eq 1 ]
+                then
+                    cata[others]+="${text_msg}"
+                fi
+            done
+            for i in "${!cata[@]}" 
+            do
+                if [ ! -z "${cata[$i]}" ] && [ "others" != "$i" ]
+                    then
+                    msg+="${cataTitle[$i]}${cata[$i]}"
+                fi
+            done
+            if [ ! -z "${cata[others]}" ]
             then
-              msg+="<h5>Bug Fixes</h5>$fix"
-          fi
-          if [ ! -z "${feat}" ]
-              then
-              msg+="<h5>New Features</h5>$feat"
-          fi
-          if [ ! -z "${ci}" ]
-              then
-              msg+="<h5>Continuous Integration</h5>$ci"
-          fi
-          if [ ! -z "${build}" ]
-              then
-              msg+="<h5>Build</h5>$ci"
-          fi
-          if [ ! -z "${docs}" ]
-              then
-              msg+="<h5>Documentation</h5>$docs"
-          fi
-          if [ ! -z "${perf}" ]
-              then
-              msg+="<h5>Performance Enhancement</h5>$perf"
-          fi
-          if [ ! -z "${refactor}" ]
-              then
-              msg+="<h5>Refactored</h5>$refactor"
-          fi
-          if [ ! -z "${style}" ]
-              then
-              msg+="<h5>Changed Style</h5>$style"
-          fi
-          if [ ! -z "${test}" ]
-              then
-              msg+="<h5>Added Tests</h5>$test"
-          fi
-          if [ ! -z "${others}" ]
-              then
-              msg+="<h5>Others</h5>$others"
-          fi
-          echo ::set-env name=COMMIT_MESSAGE::"${msg}"
+                msg+="${cataTitle[others]}${cata[others]}"
+            fi
+            echo ::set-env name=COMMIT_MESSAGE::"${msg}"
       - name: Bump version and push tag
         run: |
           cd "$GITHUB_WORKSPACE"
