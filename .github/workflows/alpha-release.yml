@@ -47,7 +47,7 @@ jobs:
                 fi
             done
             if [ ! -z "${category[others]}" ]
-            then
+            then 
                 msg+="${categoryTitle[others]}${category[others]}"
             fi
             echo ::set-env name=COMMIT_MESSAGE::"${msg}"
