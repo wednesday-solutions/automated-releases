@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - develop
-      
+
 name: Create Alpha Release
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package-version.outputs.current-version}}-alpha
-          release_name: V${{ steps.package-version.outputs.current-version}}-alpha
+          release_name: v${{ steps.package-version.outputs.current-version}}-alpha
           body: ${{ env.COMMIT_MESSAGE }}
           draft: false
           prerelease: false
