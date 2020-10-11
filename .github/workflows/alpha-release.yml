@@ -23,7 +23,7 @@ jobs:
           do
             IFS=":" read -r type cmmsg <<< $(git log --format=%B -n 1 $i)
             type="${type}" | xargs
-            text_msg="&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>"
+            text_msg="&nbsp;&nbsp;&nbsp;&nbsp;&#8226; $i - ${cmmsg}<br/>" 
             flag=1
             for i in "${!category[@]}"
             do
