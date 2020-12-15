@@ -52,10 +52,10 @@ jobs:
                     msg+="${categoryTitle[$i]}${category[$i]}"
                 fi
             done
-            if [ ! -z "${category[others]}" ]
-            then 
-                msg+="${categoryTitle[others]}${category[others]}"
-            fi
+            # if [ ! -z "${category[others]}" ]
+            # then 
+            #     msg+="${categoryTitle[others]}${category[others]}"
+            # fi
             echo "COMMIT_MESSAGE=${msg}" >> $GITHUB_ENV
       - name: Bump version and push tag
         run: |
