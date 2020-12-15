@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - develop
-      - personal/chetan
 
 name: Create Alpha Release
 
