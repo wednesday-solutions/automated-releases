@@ -55,7 +55,7 @@ jobs:
             then
                 msg+="${categoryTitle[others]}${category[others]}"
             fi
-            echo ::set-env name=COMMIT_MESSAGE::"${msg}"
+            echo 'COMMIT_MESSAGE="${msg}"' >> $GITHUB_ENV
       - name: Bump version and push tag
         run: |
           cd "$GITHUB_WORKSPACE"
