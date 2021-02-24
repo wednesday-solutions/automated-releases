@@ -32,6 +32,15 @@ Where `flags` is an optional comma-separated list of one or more of the followin
 
 And `category` can be anything of your choice. If you use a type not found in the list (but it still follows the same format of the message), it'll be grouped under `other`.
 
+## Release commit
+
+- To create an alpha release via Pull Request, the PR Title must have `alpha release` or `release alpha` present.
+- To create an alpha release directly via commit, the commit message must have `alpha release` or `release alpha` present.
+
+![](/commits.png)
+
+## Result
+![](/release.png)
 ## Github Actions used
 
 - https://github.com/marketplace/actions/generate-changelog-action
