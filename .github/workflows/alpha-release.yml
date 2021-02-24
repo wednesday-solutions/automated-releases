@@ -9,6 +9,7 @@ jobs:
   build:
     name: Create Alpha Release
     runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'release aplha') || contains(github.event.head_commit.message, 'alpha release')"
     steps:
       - name: Get Merged Pull Request
         uses: actions-ecosystem/action-get-merged-pull-request@master
@@ -51,11 +52,11 @@ jobs:
                     msg+="${categoryTitle[$i]}${category[$i]}"
                 fi
             done
-            if [ ! -z "${category[others]}" ]
-            then 
-                msg+="${categoryTitle[others]}${category[others]}"
-            fi
-            echo ::set-env name=COMMIT_MESSAGE::"${msg}"
+            # if [ ! -z "${category[others]}" ]
+            # then 
+            #     msg+="${categoryTitle[others]}${category[others]}"
+            # fi
+            echo "COMMIT_MESSAGE=${msg}" >> $GITHUB_ENV
       - name: Bump version and push tag
         run: |
           cd "$GITHUB_WORKSPACE"
