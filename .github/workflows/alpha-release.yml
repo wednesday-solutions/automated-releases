@@ -22,8 +22,8 @@ jobs:
           git fetch --prune --unshallow --tags
       - name: Get Commit Message
         run: |
-          declare -A category=( [fix]="" [build]="" [docs]="" [feature]="" [performance]="" [refactor]="" [style]="" [test]="" [others]="") 
-          declare -A categoryTitle=( [fix]="<h5>Bug Fixes</h5>" [build]="<h5>Build</h5>" [docs]="<h5>Documentation</h5>" [feature]="<h5>New Features</h5>" [performance]="<h5>Performance Enhancement</h5>" [refactor]="<h5>Refactored</h5>" [style]="<h5>Changed Style</h5>" [test]="<h5>Added Tests</h5>" [others]="<h5>Others</h5>") 
+          declare -A category=( [fix]="" [revert]="" [build]="" [docs]="" [feature]="" [performance]="" [refactor]="" [style]="" [test]="" [others]="") 
+          declare -A categoryTitle=( [fix]="<h5>Bug Fixes</h5>" [build]="<h5>Build</h5>" [docs]="<h5>Documentation</h5>" [feature]="<h5>New Features</h5>" [performance]="<h5>Performance Enhancement</h5>" [revert]="<h5>Revert Commits</h5>" [refactor]="<h5>Refactored</h5>" [style]="<h5>Changed Style</h5>" [test]="<h5>Added Tests</h5>" [others]="<h5>Others</h5>") 
           msg="#${{ steps.getMergedPR.outputs.number}} ${{ steps.getMergedPR.outputs.title}}"
           for i in $(git log --format=%h $(git merge-base HEAD^1 HEAD^2)..HEAD^2)
           do

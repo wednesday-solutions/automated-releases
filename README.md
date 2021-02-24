@@ -12,15 +12,12 @@ type(category): description [flags]
 
 Where `type` is one of the following:
 
-- `breaking`
 - `build`
-- `ci`
-- `chore`
 - `docs`
-- `feat`
+- `feature`
 - `fix`
-- `other`
-- `perf`
+- `others`
+- `performance`
 - `refactor`
 - `revert`
 - `style`
